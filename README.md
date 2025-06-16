@@ -12,11 +12,7 @@ This project demonstrates the combination of:
 - **Zig 0.14+** - Modern systems programming language
 - **SDL3** - Latest version of the Simple DirectMedia Layer
 - **Pixi** - Fast, cross-platform package manager
-- **Cross-platform development** - Built for modern toolchains
-
-### Key Features
-
-- ✨ **Zero-dependency SDL3 setup** through Pixi
+- **Task system** - For simple automation
 
 ## 🏃 Quick Start
 
@@ -32,7 +28,7 @@ This project demonstrates the combination of:
 git clone <your-repo>
 cd zig-sdl
 
-# Install dependencies and run (one command!)
+# Install dependencies and run (one command!) should work anywhere
 pixi run start
 ```
 
@@ -47,38 +43,12 @@ pixi run build
 # Run tests
 pixi run test
 
-# Build and run
-pixi run start
-
 # Invoke zig directly
 pixi run zig <cmd>
-```
 
-## 🏗️ Project Structure
-
-```
-zig-sdl/
-├── pixi.toml           # Pixi project configuration
-├── pixi.lock           # Locked dependency versions
-├── build.zig           # Zig build configuration
-├── build.zig.zon       # Zig package manifest
-└── src/
-    ├── main.zig        # Application entry point
-    └── root.zig        # SDL3 wrapper library
-```
-
-## 🎯 Architecture Highlights
-
-### Pixi Integration (`pixi.toml`)
-
-```toml
-[dependencies]
-zig = ">=0.14.0,<0.15"  # Latest stable Zig
-sdl3 = ">=3.2.16,<4"    # SDL3 with future compatibility
-
-[tasks]
-build = { cmd = "zig build", inputs = ["build.zig", "src/**"] }
-start = { cmd = "./zig-out/bin/zig_sdl", depends-on = ["build"] }
+# Launch IDE in pixi for completions
+pixi r zed
+pixi r code
 ```
 
 ### Dependencies
@@ -93,8 +63,9 @@ Currently configured for:
 - macOS ARM64 (Apple Silicon)
 - Linux x86_64
 - Windows x86_64
+Just add more platforms in `pixi.toml` as needed.
 
-### Pixi Power
+### Pixi Power?
 - **Reproducible environments** across machines
 - **Fast dependency resolution** via conda-forge
 - **No system pollution** - everything in project scope
