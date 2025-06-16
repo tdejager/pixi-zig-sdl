@@ -1,0 +1,15 @@
+[workspace]
+authors = ["Tim de Jager <tim@prefix.dev>"]
+channels = ["https://prefix.dev/conda-forge"]
+name = "zig-sdl"
+platforms = ["osx-arm64", "linux-64", "win-64"]
+version = "0.1.0"
+
+[tasks]
+build = { cmd = "zig build", inputs = ["build.zig", "build.zig.zon", "src/**"] }
+test = { cmd = "zig build test" }
+start = { cmd = "./zig-out/bin/zig_sdl", depends-on = ["build"] }
+
+[dependencies]
+zig = ">=0.14.0,<0.15"
+sdl3 = ">=3.2.16,<4"
