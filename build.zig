@@ -1,4 +1,5 @@
 const std = @import("std");
+const builtin = @import("builtin");
 
 // Although this function looks imperative, note that its job is to
 // declaratively construct a build graph that will be executed by an external
@@ -106,14 +107,18 @@ fn getLibraryAndIncludePath(b: *std.Build) ?EnvPaths {
     if (std.process.getEnvVarOwned(b.allocator, "CONDA_PREFIX")) |conda_prefix| {
         defer b.allocator.free(conda_prefix);
 
+        // Determine paths based on platform
+        const include_subdir = if (builtin.os.tag == .windows) "Library/include" else "include";
+        const lib_subdir = if (builtin.os.tag == .windows) "Library/lib" else "lib";
+
         // Add include path for SDL3 headers
-        const include_path = std.fs.path.join(b.allocator, &.{ conda_prefix, "include" }) catch {
+        const include_path = std.fs.path.join(b.allocator, &.{ conda_prefix, include_subdir }) catch {
             std.debug.print("Failed to create include path\n", .{});
             return null;
         };
 
         // Add library path
-        const lib_path = std.fs.path.join(b.allocator, &.{ conda_prefix, "lib" }) catch {
+        const lib_path = std.fs.path.join(b.allocator, &.{ conda_prefix, lib_subdir }) catch {
             std.debug.print("Failed to create library path\n", .{});
             return null;
         };
